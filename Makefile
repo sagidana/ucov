@@ -1,15 +1,19 @@
 CC=gcc
+COMMON_CFLAGS=-fPIC
 CFLAGS=-g -ggdb -fsanitize-coverage=trace-pc
 LIBS=
 
-all: main
+all: lib.so main
 
-trace.o: trace.c
-	$(CC) -c -o trace.o trace.c
+main: main.c lib.so
+	$(CC) -o main main.c
 
-main: main.c trace.o
-	$(CC) -o main main.c trace.o $(CFLAGS)
+lib.so: lib.c ucov.o
+	$(CC) -o lib.so lib.c ucov.o $(CFLAGS) $(COMMON_CFLAGS) -shared
+
+ucov.o: ucov.c
+	$(CC) -c -o ucov.o ucov.c $(COMMON_CFLAGS)
 
 clean:
-	rm -f *.o main
+	rm -f lib.so *.o
 
