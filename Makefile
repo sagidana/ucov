@@ -1,6 +1,6 @@
 CC=gcc
 COMMON_CFLAGS=-fPIC
-CFLAGS=-g -ggdb -fsanitize-coverage=trace-pc
+CFLAGS=-O0 -g -ggdb -fsanitize-coverage=trace-pc
 LIBS=
 
 all: lib.so main

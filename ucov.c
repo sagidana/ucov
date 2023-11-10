@@ -78,12 +78,8 @@ void notrace __sanitizer_cov_trace_pc(void)
 {
 	unsigned long pos;
 	unsigned long ip = TRACED_PC;
-	// not enabled
+
 	if (!__smp_load_acquire(&ucov.enabled)) return;
-
-	// TODO: fix ASLR
-
-	printf("code instrumented: %p\n", (void*)ip);
 
 	pos = READ_ONCE(ucov.buf[0]) + 1;
 	if (likely(pos < (ucov.buf_len / sizeof(void*)) - 1)) {
